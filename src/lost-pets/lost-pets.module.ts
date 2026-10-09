@@ -6,6 +6,7 @@ import { LostPet } from './entities/lost-pet.entity';
 import { LostPetsService } from './lost-pets.service';
 import { AuthModule } from '../auth/auth.module';
 import { CacheModule } from '../cache/cache.module';
+import { StorageModule } from '../storage/storage.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { CacheModule } from '../cache/cache.module';
       LostPet
     ]),
     AuthModule,
-    CacheModule
+    CacheModule,
+    StorageModule
   ],
   controllers: [LostPetsController],
   providers: [LostPetsService]
