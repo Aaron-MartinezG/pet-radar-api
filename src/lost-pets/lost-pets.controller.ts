@@ -35,8 +35,12 @@ export class LostPetsController {
         }
     }
 
+     @UseInterceptors(FileInterceptor('image', {
+        limits: { fileSize: 5 * 1024 * 1024 },
+        fileFilter: (_req, file, cb) => cb(null, file.mimetype.startsWith('image/'))
+    }))
     @Post()
-    async createLostPet(@Body() createLostPetDto: CreateLostPetDto){
+    async createLostPet(@Body() createLostPetDto: CreateLostPetDto, @UploadedFile() file: any){
         const response: BodyResponse = {
             status: 200,
             error: false,
@@ -44,9 +48,10 @@ export class LostPetsController {
             data: undefined
         }
         try{
-            const template = generateLostPetTemplate(createLostPetDto);
+            const url = await this.storageService.uploadFile(file,"pets");
+            const template = generateLostPetTemplate(createLostPetDto,url);
             await this.emailService.sendEmail(template);
-            const lostPet = await this.lostPetService.createLostPet(createLostPetDto)
+            const lostPet = await this.lostPetService.createLostPet(createLostPetDto,url)
             response.data = lostPet;
             return response;
         }

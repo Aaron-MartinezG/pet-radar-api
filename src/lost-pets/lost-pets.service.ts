@@ -27,7 +27,7 @@ export class LostPetsService {
         return lostPets;
     }
 
-    async createLostPet(dto:CreateLostPetDto) : Promise<LostPet> {
+    async createLostPet(dto:CreateLostPetDto,image:string) : Promise<LostPet> {
         const newLostPet = this.lostPetRepository.create({
             type: dto.type,
             name: dto.name,
@@ -36,6 +36,7 @@ export class LostPetsService {
             age: dto.age,
             color: dto.color,
             ownerName: dto.ownerName,
+            image: image,
             location: {
                 type: 'Point',
                 coordinates:[dto.lon,dto.lat]

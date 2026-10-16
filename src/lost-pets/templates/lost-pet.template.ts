@@ -7,7 +7,7 @@ const row = (label: string, value: string) => `
                 <td align="right" style="padding:14px 0;border-bottom:1px solid #e3efe6;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:22px;color:#143d24;font-weight:bold;">${value}</td>
               </tr>`;
  
-export const generateLostPetTemplate = (createLostPetDto: CreateLostPetDto) => {
+export const generateLostPetTemplate = (createLostPetDto: CreateLostPetDto, image:string) => {
   const { type, name, phone, race, age, color, lat, lon } = createLostPetDto;
   const ageLabel = `${age} ${age === 1 ? 'año' : 'años'}`;
   const mapboxToken = envs.MAPBOX_TOKEN;
@@ -21,6 +21,7 @@ export const generateLostPetTemplate = (createLostPetDto: CreateLostPetDto) => {
     <title>Mascota perdida: ${name}</title>
   </head>
   <body style="margin:0;padding:0;background-color:#f2f8f4;">
+  <img src=${image}/>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f2f8f4;padding:32px 12px;">
       <tr>
         <td align="center">
